@@ -17,6 +17,11 @@ class ShowInfo extends HTMLElement {
         this.button = this.shadowRoot.querySelector('button');
         this.infoEl = this.shadowRoot.querySelector('p');
         this.isHidden = true;
+        
+        this.toggleProperties = {
+            buttonText: { true: "Hide", false: "Show" },
+            infoElStyleDisplay: { true: "block", false: "none" }
+        }
     }
 
     connectedCallback() {
@@ -27,15 +32,9 @@ class ShowInfo extends HTMLElement {
      * Toggles the state and text of the components.
      */
     _onClick() {
-        if (this.isHidden) {
-            this.infoEl.style.display = 'block';
-            this.button.textContent = 'Hide';
-            this.isHidden = false;
-        } else {
-            this.infoEl.style.display = 'none';
-            this.button.textContent = 'Show';
-            this.isHidden = true;
-        }
+        this.isHidden = !this.isHidden;
+        this.button.textContent = this.toggleProperties.buttonText[this.isHidden];
+        this.infoEl.style.display = this.toggleProperties.infoElStyleDisplay[this.isHidden];
     }
 }
 
