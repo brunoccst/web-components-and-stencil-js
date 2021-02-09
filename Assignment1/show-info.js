@@ -4,8 +4,6 @@
 class ShowInfo extends HTMLElement {
     constructor() {
         super();
-        this.isHidden = true;
-
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
@@ -16,12 +14,12 @@ class ShowInfo extends HTMLElement {
             <button>Show</button>
             <p id="info-box"><slot></slot></p>
         `;
+        this.button = this.shadowRoot.querySelector('button');
+        this.infoEl = this.shadowRoot.querySelector('p');
+        this.isHidden = true;
     }
 
     connectedCallback() {
-        this.button = this.shadowRoot.querySelector('button');
-        this.infoEl = this.shadowRoot.querySelector('p');
-
         this.button.addEventListener('click', this._onClick.bind(this));
     }
 
