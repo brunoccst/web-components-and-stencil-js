@@ -14,7 +14,7 @@ class ShowInfo extends HTMLElement {
                 }
             </style>
             <button>Show</button>
-            <p id="info-box">More infos!</p>
+            <p id="info-box"><slot></slot></p>
         `;
     }
 
