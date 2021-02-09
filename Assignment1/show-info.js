@@ -14,18 +14,19 @@ class ShowInfo extends HTMLElement {
             <button>Show</button>
             <p id="info-box"><slot></slot></p>
         `;
-        this.button = this.shadowRoot.querySelector('button');
-        this.infoEl = this.shadowRoot.querySelector('p');
-        this.isHidden = true;
-        
+
         this.toggleProperties = {
             buttonText: { true: "Hide", false: "Show" },
             infoElStyleDisplay: { true: "block", false: "none" }
         }
+
+        this.button = this.shadowRoot.querySelector('button');
+        this.button.addEventListener('click', this._onClick.bind(this));
+        this.infoEl = this.shadowRoot.querySelector('p');
+        this.isHidden = true;
     }
 
     connectedCallback() {
-        this.button.addEventListener('click', this._onClick.bind(this));
     }
 
     /**
