@@ -2,18 +2,23 @@
  * Web component that contains a button which, when clicked, expands an info box with more text.
  */
 class ShowInfo extends HTMLElement {
+    _style = `
+        <style>
+            #info-box {
+                display: none;
+            }
+        </style>
+    `;
+
+    _html = `
+        <button>Show</button>
+        <p id="info-box"><slot></slot></p>
+    `;
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
-            <style>
-                #info-box {
-                    display: none;
-                }
-            </style>
-            <button>Show</button>
-            <p id="info-box"><slot></slot></p>
-        `;
+        this._setInnerHtml();
 
         this.toggleProperties = {
             buttonText: { true: "Hide", false: "Show" },
@@ -24,6 +29,10 @@ class ShowInfo extends HTMLElement {
         this.button.addEventListener('click', this._onClick.bind(this));
         this.infoEl = this.shadowRoot.querySelector('p');
         this.isHidden = true;
+    }
+
+    _setInnerHtml() {
+        this.shadowRoot.innerHTML = `${this._style}${this._html}`;
     }
 
     connectedCallback() {
