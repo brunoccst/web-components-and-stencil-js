@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'smart-tooltip',
@@ -15,13 +15,13 @@ export class SmartTooltip {
   /**
    * Tooltip is open.
    */
-  @Prop({ reflect: true, mutable: true }) _isOpen: boolean;
+  @State() isOpen: boolean;
 
   /**
    * Toggles if the tooltip is opened or not.
    */
   _toggleIsOpenState() {
-    this._isOpen = !this._isOpen;
+    this.isOpen = !this.isOpen;
   }
 
   /**
@@ -32,7 +32,7 @@ export class SmartTooltip {
       <div class="container">
         <slot></slot>
         <button id="tooltip" onClick={this._toggleIsOpenState.bind(this)}>?</button>
-        <span class={this._isOpen ? "" : "hide"}>{this.tooltipText}</span>
+        <span class={this.isOpen ? "" : "hide"}>{this.tooltipText}</span>
       </div>
     );
   }

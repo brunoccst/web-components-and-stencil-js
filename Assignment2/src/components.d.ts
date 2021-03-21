@@ -8,10 +8,6 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SmartTooltip {
         /**
-          * Tooltip is open.
-         */
-        "_isOpen": boolean;
-        /**
           * Tooltip text to be displayed when open.
          */
         "tooltipText": string;
@@ -30,10 +26,6 @@ declare global {
 }
 declare namespace LocalJSX {
     interface SmartTooltip {
-        /**
-          * Tooltip is open.
-         */
-        "_isOpen"?: boolean;
         /**
           * Tooltip text to be displayed when open.
          */
