@@ -1,13 +1,13 @@
 /**
  * Web component that contains a button which, when clicked, expands an info box with more text.
  */
-class ShowInfo extends HTMLElement {
+customElements.define('show-info', class ShowInfo extends HTMLElement {
     /**
      * Style tag with all CSS for the HTML elements.
      */
     _style = `
         <style>
-            #info-box {
+            .hide {
                 display: none;
             }
         </style>
@@ -18,8 +18,25 @@ class ShowInfo extends HTMLElement {
      */
     _html = `
         <button>Show</button>
-        <p id="info-box"><slot></slot></p>
+        <p class="hide">
+            <slot></slot>
+        </p>
     `;
+
+    /**
+     * Is the content hidden.
+     */
+    _isHidden = true;
+
+    /**
+     * Button element.
+     */
+    _button;
+
+    /**
+     * Paragraph element with the slotted element.
+     */
+    _paragraph;
 
     /**
      * Creates a new instance of the class.
@@ -27,37 +44,47 @@ class ShowInfo extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this._setInnerHtml();
-
-        this.toggleProperties = {
-            buttonText: { true: "Hide", false: "Show" },
-            infoElStyleDisplay: { true: "block", false: "none" }
-        }
-
-        this.button = this.shadowRoot.querySelector('button');
-        this.button.addEventListener('click', this._onClick.bind(this));
-        this.infoEl = this.shadowRoot.querySelector('p');
-        this.isHidden = true;
-    }
-
-    /**
-     * Sets the inner HTML of the component, joining the CSS and the HTML elements.
-     */
-    _setInnerHtml() {
         this.shadowRoot.innerHTML = `${this._style}${this._html}`;
-    }
-
-    connectedCallback() {
+        this._button = this.shadowRoot.querySelector('button');
+        this._paragraph = this.shadowRoot.querySelector('p');
     }
 
     /**
-     * Toggles the state and text of the components.
+     * Event triggered when the component is attached to DOM.
+     * Configures the button click event.
      */
-    _onClick() {
-        this.isHidden = !this.isHidden;
-        this.button.textContent = this.toggleProperties.buttonText[this.isHidden];
-        this.infoEl.style.display = this.toggleProperties.infoElStyleDisplay[this.isHidden];
+    connectedCallback() {
+        this._button.addEventListener('click', this._buttonOnClick.bind(this));
     }
-}
 
-customElements.define('show-info', ShowInfo);
+    /**
+     * Event triggered when the button is clicked.
+     * Toggles the hidden state and update the component's inner HTML.
+     */
+    _buttonOnClick() {
+        this._toggleIsHidden();
+        this._updateElements();
+    }
+
+    /**
+     * Toggles the hidden state.
+     */
+    _toggleIsHidden() {
+        this._isHidden = !this._isHidden;
+    }
+
+    /**
+     * Updates the elements according to the hidden state.
+     */
+    _updateElements() {
+        const className = "hide";
+        if (this._isHidden) {
+            this._button.innerText = "Show";
+            this._paragraph.classList.add(className);
+        }
+        else {
+            this._button.innerText = "Hide";
+            this._paragraph.classList.remove(className);
+        }
+    }
+});
