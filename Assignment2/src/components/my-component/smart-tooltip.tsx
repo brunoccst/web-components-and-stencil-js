@@ -1,32 +1,39 @@
-import { Component, Prop, h } from '@stencil/core';
-import { format } from '../../utils/utils';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'smart-tooltip',
   styleUrl: 'smart-tooltip.css',
   shadow: true,
 })
-export class MyComponent {
-  /**
-   * The first name
-   */
-  @Prop() first: string;
+export class SmartTooltip {
 
   /**
-   * The middle name
+   * Tooltip text to be displayed when open.
    */
-  @Prop() middle: string;
+  @Prop({ reflect: true }) tooltipText: string;
 
   /**
-   * The last name
+   * Tooltip is open.
    */
-  @Prop() last: string;
+  @Prop({ reflect: true, mutable: true }) _isOpen: boolean;
 
-  private getText(): string {
-    return format(this.first, this.middle, this.last);
+  /**
+   * Toggles if the tooltip is opened or not.
+   */
+  _toggleIsOpenState() {
+    this._isOpen = !this._isOpen;
   }
 
+  /**
+   * Renders the component.
+   */
   render() {
-    return <div>Hello, World! I'm {this.getText()}</div>;
+    return (
+      <div class="container">
+        <slot></slot>
+        <button id="tooltip" onClick={this._toggleIsOpenState.bind(this)}>?</button>
+        <span class={this._isOpen ? "" : "hide"}>{this.tooltipText}</span>
+      </div>
+    );
   }
 }

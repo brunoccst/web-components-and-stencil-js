@@ -8,17 +8,13 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SmartTooltip {
         /**
-          * The first name
+          * Tooltip is open.
          */
-        "first": string;
+        "_isOpen": boolean;
         /**
-          * The last name
+          * Tooltip text to be displayed when open.
          */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+        "tooltipText": string;
     }
 }
 declare global {
@@ -35,17 +31,13 @@ declare global {
 declare namespace LocalJSX {
     interface SmartTooltip {
         /**
-          * The first name
+          * Tooltip is open.
          */
-        "first"?: string;
+        "_isOpen"?: boolean;
         /**
-          * The last name
+          * Tooltip text to be displayed when open.
          */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+        "tooltipText"?: string;
     }
     interface IntrinsicElements {
         "smart-tooltip": SmartTooltip;

@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MyComponent } from './smart-tooltip';
+import { SmartTooltip } from './smart-tooltip';
 
 describe('smart-tooltip', () => {
   it('renders', async () => {
     const { root } = await newSpecPage({
-      components: [MyComponent],
+      components: [SmartTooltip],
       html: '<smart-tooltip></smart-tooltip>',
     });
     expect(root).toEqualHtml(`
@@ -20,7 +20,7 @@ describe('smart-tooltip', () => {
 
   it('renders with values', async () => {
     const { root } = await newSpecPage({
-      components: [MyComponent],
+      components: [SmartTooltip],
       html: `<smart-tooltip first="Stencil" last="'Don't call me a framework' JS"></smart-tooltip>`,
     });
     expect(root).toEqualHtml(`
