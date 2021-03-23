@@ -1,0 +1,42 @@
+.container {
+  display: inline-flex;
+  flex-flow: row;
+}
+
+.tooltip {
+  display: inline-flex;
+  flex-flow: column;
+  position: relative;
+  margin-left: 4px;
+}
+
+.tooltip > * {
+  background-color: black;
+  color: var(--white, #FFFFFF);
+  border-radius: 4px;
+}
+
+.tooltip .label {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.tooltip .text {
+  position: absolute;
+  width: max-content;
+  max-width: 200px;
+  visibility: visible;
+  z-index: 1;
+  padding: 2px 4px;
+  margin-top: calc(100% + 2px);
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.tooltip .text.hide {
+  visibility: hidden;
+}
