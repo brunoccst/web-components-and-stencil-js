@@ -25,14 +25,28 @@ export class SmartTooltip {
   }
 
   /**
+   * Gets the tooltip class according to the current open state.
+   * @returns Tooltip class.
+   */
+  _getTooltipClass(): string {
+    let classList = ["text"];
+    if (!this.isOpen)
+      classList.push("hide");
+
+    return classList.join(" ");
+  }
+
+  /**
    * Renders the component.
    */
   render() {
     return (
       <div class="container">
         <slot></slot>
-        <button id="tooltip" onClick={this._toggleIsOpenState.bind(this)}>?</button>
-        <span class={this.isOpen ? "" : "hide"}>{this.tooltipText}</span>
+        <div class="tooltip">
+          <div class="label" onClick={this._toggleIsOpenState.bind(this)}>?</div>
+          <span class={this._getTooltipClass()}>{this.tooltipText}</span>
+        </div>
       </div>
     );
   }
